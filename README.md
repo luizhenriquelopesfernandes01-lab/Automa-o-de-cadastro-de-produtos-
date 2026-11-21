@@ -1,68 +1,36 @@
-# Automa-o-de-cadastro-de-produtos-
-import time
-import pandas
-import pyautogui
 
-pyautogui.PAUSE = 0.5
+# Cadastro Automático de Produtos
 
-LINK = "https://exemplo.com/login"
-EMAIL = "seu_email@exemplo.com"
-SENHA = "sua_senha"
+Automação em Python que faz login em um sistema e cadastra produtos automaticamente a partir de uma tabela CSV, usando pandas e PyAutoGUI. Projeto desenvolvido durante o curso de Python da Hashtag Treinamentos.
 
+## O que o projeto faz
 
-def abrir_sistema():
-    pyautogui.press("win")
-    pyautogui.write("chrome")
-    pyautogui.press("enter")
-    time.sleep(3)
-    pyautogui.write(LINK)
-    pyautogui.press("enter")
-    time.sleep(4)
+1. Abre o navegador e acessa o sistema.
+2. Faz login com e-mail e senha.
+3. Lê a tabela de produtos no arquivo `produtos.csv`.
+4. Cadastra cada produto, preenchendo os campos um a um.
+
+## Tecnologias
+
+- Python
+- pandas
+- PyAutoGUI
 
 
-def fazer_login():
-    pyautogui.click(x=700, y=400)
-    pyautogui.write(EMAIL)
-    pyautogui.press("tab")
-    pyautogui.write(SENHA)
-    pyautogui.press("tab")
-    pyautogui.press("enter")
-    time.sleep(4)
+## Configuração
 
+Antes de rodar, edite o início do arquivo `main.py`:
 
-def cadastrar_produto(linha):
-    pyautogui.click(x=700, y=300)
+- `LINK`: endereço do sistema.
+- `EMAIL` e `SENHA`: dados de acesso.
+- As posições de clique (x e y) conforme a resolução da sua tela.
 
-    campos = [
-        linha["codigo"],
-        linha["marca"],
-        linha["tipo"],
-        linha["categoria"],
-        linha["preco"],
-        linha["custo"],
-        linha["obs"],
-    ]
+Para descobrir as posições, use `pyautogui.position()` no terminal.
 
-    for campo in campos:
-        if pandas.notna(campo):
-            pyautogui.write(str(campo))
-        pyautogui.press("tab")
+## Formato do CSV
 
-    pyautogui.press("enter")
-    pyautogui.scroll(5000)
+O arquivo `produtos.csv` precisa ter as colunas: codigo, marca, tipo, categoria, preco, custo e obs.
 
+## Segurança
 
-def main():
-    tabela = pandas.read_csv("produtos.csv")
-
-    abrir_sistema()
-    fazer_login()
-
-    for indice in tabela.index:
-        cadastrar_produto(tabela.loc[indice])
-
-    print("Todos os produtos foram cadastrados.")
-
-
-if __name__ == "__main__":
-    main()
+Mova o mouse para o canto superior esquerdo para abortar a automação.
